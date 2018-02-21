@@ -1,0 +1,210 @@
+<html>
+<head>
+	<title> WT Sign Up </title>
+	
+<script>
+function validateSignUp() {
+  var valid = 1;
+  var firstname = document.getElementById('FirstName');
+  var firstname_validation = document.getElementById("firstname_validation");
+  var lastname = document.getElementById('LastName');
+  var lastname_validation = document.getElementById("lastname_validation");  
+  var email = document.getElementById('Email');
+  var email_validation = document.getElementById("email_validation");
+  var mobileno = document.getElementById('MobileNo');
+  var mobileno_validation = document.getElementById("mobileno_validation");
+  var username = document.getElementById('Username');
+  var username_validation = document.getElementById("username_validation");
+  var password = document.getElementById('Password');
+  var password_validation = document.getElementById("password_validation");
+  var cpassword = document.getElementById('CPassword');
+  var cpassword_validation = document.getElementById("cpassword_validation");
+
+  ///Validation for the First Name
+  if ((firstname.value === "")
+	 || !((/^[A-Za-z]{1,30}$/).test(firstname.value)))
+  {
+    valid = 0;
+    firstname_validation.innerHTML = "Must not be empty/too large, must contain only letters.";
+    firstname_validation.style.display = "block";
+    firstname_validation.style.maxHeight = "400px";
+    firstname_validation.parentNode.style.backgroundColor = "#FFDFDF";
+  }
+  else
+  {
+    firstname_validation.style.display = "none";
+    firstname_validation.parentNode.style.backgroundColor = "transparent";
+  }
+  
+  
+  ///Validation for the Last Name
+  if ((lastname.value === "")
+	 || !((/^[A-Za-z]{1,30}$/).test(lastname.value)))
+  {
+    valid = 0;
+    lastname_validation.innerHTML = "Must not be empty/too large, must contain only letters.";
+    lastname_validation.style.display = "block";
+    lastname_validation.parentNode.style.backgroundColor = "#FFDFDF";
+  }
+  else
+  {
+    lastname_validation.style.display = "none";
+    lastname_validation.parentNode.style.backgroundColor = "transparent";
+  }
+  
+  ///Validation for the Email
+  if ((email.value === "")
+	 || !((/[_a-zA-Z\d\-.]+@([_a-zA-Z\d\-]+(\.[_a-zA-Z\d\-]+)+)/).test(email.value))
+	 || !(email.value.length <= 40)){
+    valid = 0;
+    email_validation.innerHTML = "Must not be empty/too large, must be valid.";
+    email_validation.style.display = "block";
+    email_validation.parentNode.style.backgroundColor = "#FFDFDF";
+  }
+  else
+  {
+    email_validation.style.display = "none";
+    email_validation.parentNode.style.backgroundColor = "transparent";
+  }
+  
+
+  ///Validation for the Mobile Number
+  if ((mobileno.value === "")
+	 || !(/^[0-9]{11,11}$/).test(mobileno.value))
+  {
+    valid = 0;
+    mobileno_validation.innerHTML = "Must not be empty,must contain only numbers, and must be exactly 11 digits.";
+    mobileno_validation.style.display = "block";
+    mobileno_validation.parentNode.style.backgroundColor = "#FFDFDF";
+  }
+  else
+  {
+    mobileno_validation.style.display = "none";
+    mobileno_validation.parentNode.style.backgroundColor = "transparent";
+  }
+  
+  ///Validation for the Username
+  if ((username.value === "")
+	 || !((/^[a-zA-Z0-9]{6,20}$/).test(username.value))) 
+  {
+    valid = 0;
+    username_validation.innerHTML = "Must not be empty/too large/too short, must contain only letters/numbers.";
+    username_validation.style.display = "block";
+    username_validation.parentNode.style.backgroundColor = "#FFDFDF";
+  }
+  else
+  {
+    username_validation.style.display = "none";
+    username_validation.parentNode.style.backgroundColor = "transparent";
+  }
+  
+  ///Validation for the Password
+  if ((password.value === "")
+	 || !((/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{6,20})$/).test(password.value)))
+  {
+    valid = 0;
+    password_validation.innerHTML = "Must not be empty/out of range, at least : one uppercase & lowercase letter, and a digit.";
+    password_validation.style.display = "block";
+    password_validation.parentNode.style.backgroundColor = "#FFDFDF";
+  }
+  else
+  {
+    password_validation.style.display = "none";
+    password_validation.parentNode.style.backgroundColor = "transparent";
+  }
+  
+  ///Validation for the Confirmed Password
+  if ((cpassword.value === "")
+	 || !(cpassword.value === password.value))
+  {
+    valid = 0;
+    cpassword_validation.innerHTML = "Must not be empty, and must match the password above.";
+    cpassword_validation.style.display = "block";
+    cpassword_validation.parentNode.style.backgroundColor = "#FFDFDF";
+  }
+  else
+  {
+    cpassword_validation.style.display = "none";
+    cpassword_validation.parentNode.style.backgroundColor = "transparent";
+  }
+    
+  if (!valid)
+    return false;
+}
+</script>
+
+<Style>
+#firstname_validation, #lastname_validation, #email_validation, #address_validation,
+#city_validation, #postalcode_validation, #mobileno_validation, #username_validation,
+#password_validation, #cpassword_validation {
+    display:none;
+}
+
+
+span.error {color:red;}
+
+td {font-family: Trebuchet MS;
+font-size : 16px;}
+
+table {position: absolute;
+	left:14%;
+	border-style: solid;
+    border-color: #C1C1C1;}
+	
+.logo 
+{
+position: absolute;
+top: 10%;
+left: 5.7%;
+display: inline-block;
+transform: translate(-50%, -50%);
+}
+
+</style>
+</head>
+<body>
+<a href='/waterting/home.html' class='logo'><img src='/waterting/droplet.jpg' width='150' height='120'></a>	
+<form action="sendsignup.php" method="POST" onsubmit="return validateSignUp();" enctype="multipart/form-data">
+	<table> 
+		<tr>
+			<td>Firstname:</td>
+			<td height='80' width='200'><input id="FirstName" name="FirstName" type="text" value=""/><br>
+			<span id="firstname_validation" class="error" style="font-size:15px" style="font-size:15px"></span></td>
+			<td>Username:</td>
+			<td height='80' width='200'><input id="Username" name="Username" type="text" value=""/><br />
+			<span id="username_validation" class="error" style="font-size:15px"></span>
+			</td>
+		</tr>
+		<tr>
+			<td>Lastname:</td>
+			<td height='80' width='200'><input id="LastName" name="LastName" type="text" value=""/><br />
+			<span id="lastname_validation" class="error" style="font-size:15px"></span></td>
+			<td>Password:</td>
+			<td height='80' width='200'><input id="Password" name="Password" type="password" value=""/><br />
+			<span id="password_validation" class="error" style="font-size:15px"></span>
+			</td>
+		</tr>
+		<tr>
+			<td>Email:</td>
+			<td height='80' width='200'><input id="Email" name="Email" type="text" value=""/><br />
+			<span id="email_validation" class="error" style="font-size:15px"></span>
+			</td>
+			<td>Confirm Password:</td>
+			<td height='80' width='200'><input id="CPassword" name="CPassword" type="password" value=""/><br />
+			<span id="cpassword_validation" class="error" style="font-size:15px"></span>
+			</td>
+		</tr>
+		<tr>
+			<td>Mobile Number</td>
+			<td height='80' width='200'><input id="MobileNo" name="MobileNo" type="text" value=""/><br />
+			<span id="mobileno_validation" class="error" style="font-size:15px"></span>
+			</td>
+		</tr>
+		<tr>
+			<td align='center' colspan='4'><input type="submit" value="Sign Up" /></td>
+		</tr>
+	</table>
+</form>
+</body>
+</head>
+</html>
