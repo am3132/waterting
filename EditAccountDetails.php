@@ -1,9 +1,9 @@
 <html>
 <head>
-	<title> WT Sign Up </title>
-	
+	<title> WT Edit Account </title>
+</head>
 <script>
-function validateSignUp() {
+function validateEditAccount() {
   var valid = 1;
   var firstname = document.getElementById('FirstName');
   var firstname_validation = document.getElementById("firstname_validation");
@@ -17,7 +17,7 @@ function validateSignUp() {
   var height_validation = document.getElementById("height_validation");
   var weight = document.getElementById('Weight');
   var weight_validation = document.getElementById("weight_validation");
-  var username = document.getElementById('Username');
+  /* var username = document.getElementById('Username'); */
   var username_validation = document.getElementById("username_validation");
   var password = document.getElementById('Password');
   var password_validation = document.getElementById("password_validation");
@@ -120,12 +120,12 @@ function validateSignUp() {
     weight_validation.parentNode.style.backgroundColor = "transparent";
   }
   
-  ///Validation for the Username
+ /*  //Validation for the Username
   if ((username.value === "")
 	 || !((/^[a-zA-Z0-9]{6,20}$/).test(username.value))) 
   {
     valid = 0;
-    username_validation.innerHTML = "Must not be empty/too large/too short, must contain only letters/numbers.";
+    username_validation.innerHTML = "Must not be empty and must contain only letters/numbers.";
     username_validation.style.display = "block";
     username_validation.parentNode.style.backgroundColor = "#FFDFDF";
   }
@@ -133,7 +133,7 @@ function validateSignUp() {
   {
     username_validation.style.display = "none";
     username_validation.parentNode.style.backgroundColor = "transparent";
-  }
+  } */
   
   ///Validation for the Password
   if ((password.value === "")
@@ -172,18 +172,30 @@ function validateSignUp() {
 
 <style>
 #firstname_validation, #lastname_validation, #email_validation, #mobileno_validation,
-#height_validation, #weight_validation, #username_validation, #password_validation, #cpassword_validation {
+#height_validation, #weight_validation, #password_validation, #cpassword_validation { <!--#username_validation, -->
     display:none;
 }
 
+span.error {
+  color:red;
+}
 
-span.error {color:red;}
+.acclinks
+{
+text-decoration: none;
+color: black;
+font-family: Trebuchet MS;
+position: relative;
+	top: 500px;
+    right: 30px;
+}
 
 td {font-family: Trebuchet MS;
 font-size : 16px;}
 
 table {position: absolute;
 	left:14%;
+	top:1.2%;
 	border-style: solid;
     border-color: #C1C1C1;}
 	
@@ -195,60 +207,103 @@ left: 5.7%;
 display: inline-block;
 transform: translate(-50%, -50%);
 }
-
 </style>
-</head>
+<?php
+echo '<div align="right">';
+
+$authToken = null;
+$con = mysqli_connect("localhost","csed","waterting","waterting");
+if (!$con)
+{
+	echo "Failed to connect to database :" . mysqli_connect_error();
+	die();
+}
+		
+if (isset($_COOKIE['auth'])) 
+{
+	$authToken = $_COOKIE['auth'];
+	$query = "SELECT * FROM userstable WHERE AuthToken = '$authToken'";
+	$result = mysqli_query($con,$query);	
+	$row = mysqli_fetch_assoc($result);
+	$username = $row['Username'];
+	$password = $row['Password'];
+	$firstname = $row['FirstName'];
+	$lastname = $row['LastName'];
+	$email = $row['Email'];
+	$mobileno = $row['MobileNo'];
+	$height = $row['Height'];
+	$weight = $row['Weight'];
+	if ($username === "Admin" && $password === "Admin123")
+	{
+		header('Location: /compproject/home/home.php');
+	}
+	else
+	{	echo "<div class='acclinks'>
+				Welcome, $username !&nbsp;&nbsp;<br>
+				</div>";
+		echo '<a href="/waterting/editaccountdetails.php" class = "acclinks">Edit Account Details</a>&nbsp;&nbsp;<br>';
+		echo '<a href="/waterting/logout.php" class = "acclinks">Log out</a>&nbsp;&nbsp;<br>';
+				
+	}						
+} 
+else 
+{	
+	header('Location: /compproject/home/home.php');
+}	
+echo '</div>';
+?>
 <body>
-<a href='/waterting/home.html' class='logo'><img src='/waterting/droplet.jpg' width='150' height='120'></a>	
-<form action="sendsignup.php" method="POST" onsubmit="return validateSignUp();" enctype="multipart/form-data">
-	<table> 
+<a href='/waterting/main.php' class='logo'><img src='/waterting/droplet.jpg' width='150' height='120'></a>	
+<form action="updateaccountdetails.php" method="POST" onsubmit="return validateEditAccount();" enctype="multipart/form-data">
+	<table>
+		<input type='hidden' name='OldEmail' <?php echo "value='$email'";?>>
+		<!--<input type='hidden' name='OldUsername' <?php echo "value='$username'";?>>-->
 		<tr>
 			<td>Firstname:</td>
-			<td height='80' width='200'><input id="FirstName" name="FirstName" type="text" value=""/><br>
-			<span id="firstname_validation" class="error" style="font-size:15px" style="font-size:15px"></span>
+				<td height='80' width='200'><input id="FirstName" name="FirstName" type="text" value="<?php echo $firstname ?>"/><br>
+				<span id="firstname_validation" class="error" style="font-size:15px" style="font-size:15px"></span>
 			</td>
 			<td>Lastname:</td>
-			<td height='80' width='200'><input id="LastName" name="LastName" type="text" value=""/><br />
-			<span id="lastname_validation" class="error" style="font-size:15px"></span>
+				<td height='80' width='200'><input id="LastName" name="LastName" type="text" value="<?php echo $lastname ?>"/><br />
+				<span id="lastname_validation" class="error" style="font-size:15px"></span>
 			</td>
 			<td>Email:</td>
-			<td height='80' width='200'><input id="Email" name="Email" type="text" value=""/><br />
-			<span id="email_validation" class="error" style="font-size:15px"></span>
+				<td height='80' width='200'><input id="Email" name="Email" type="text" value="<?php echo $email ?>"/><br>
+				<span id="email_validation" class="error" style="font-size:15px"></span>
 			</td>
 		</tr>
 		<tr>
-			<td>Mobile Number:</td>
-			<td height='80' width='200'><input id="MobileNo" name="MobileNo" type="text" value=""/><br />
-			<span id="mobileno_validation" class="error" style="font-size:15px"></span>
+			<td>Mobile Number</td>
+				<td height='80' width='200'><input id="MobileNo" name="MobileNo" type="text" value="<?php echo $mobileno ?>"/><br>
+				<span id="mobileno_validation" class="error" style="font-size:15px"></span>
 			</td>
 			<td>Height (cm):</td>
-			<td height='80' width='200'><input id="Height" name="Height" type="text" value=""/><br />
-			<span id="height_validation" class="error" style="font-size:15px"></span>
+				<td height='80' width='200'><input id="Height" name="Height" type="text" value="<?php echo $height ?>"/><br />
+				<span id="height_validation" class="error" style="font-size:15px"></span>
 			</td>
 			<td>Weight (kg):</td>
-			<td height='80' width='200'><input id="Weight" name="Weight" type="text" value=""/><br />
-			<span id="weight_validation" class="error" style="font-size:15px"></span>
-			</td>			
+				<td height='80' width='200'><input id="Weight" name="Weight" type="text" value="<?php echo $weight ?>"/><br />
+				<span id="weight_validation" class="error" style="font-size:15px"></span>
+			</td>
 		</tr>
 		<tr>
 			<td>Username:</td>
-			<td height='80' width='200'><input id="Username" name="Username" type="text" value=""/><br />
-			<span id="username_validation" class="error" style="font-size:15px"></span>
+				<td height='80' width='200'><input type="text" DISABLED value="<?php echo $username ?>"/><br> <!--id="Username" name="Username"--> 
+				<span style="font-size:15px"></span> <!--id="username_validation" class="error"-->
 			</td>
 			<td>Password:</td>
-			<td height='80' width='200'><input id="Password" name="Password" type="password" value=""/><br />
-			<span id="password_validation" class="error" style="font-size:15px"></span>
+				<td height='80' width='200'><input id="Password" name="Password" type="password" value=""/><br>
+				<span id="password_validation" class="error" style="font-size:15px"></span>
 			</td>
 			<td>Confirm Password:</td>
-			<td height='80' width='200'><input id="CPassword" name="CPassword" type="password" value=""/><br />
-			<span id="cpassword_validation" class="error" style="font-size:15px"></span>
+				<td height='80' width='200'><input id="CPassword" name="CPassword" type="password" value=""/><br>
+				<span id="cpassword_validation" class="error" style="font-size:15px"></span>
 			</td>
 		</tr>
 		<tr>
-			<td align='center' colspan='4'><input type="submit" value="Sign Up" /></td>
+			<td align='center' colspan='7'><input type="submit" value="Update Account Details"/></td>
 		</tr>
 	</table>
 </form>
 </body>
-</head>
 </html>

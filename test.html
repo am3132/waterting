@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>Test</title>
+</head>
+
+<script>
+function changeLBS(){
+  var val_1 = document.getElementById('1').value;
+  var val_2 = parseFloat(val_1) / 0.45359237;
+  document.getElementById('2').value = val_2.toFixed(2);
+}
+var input_1 = document.getElementById('1');
+input_1.onchange = function(){
+  changeLBS();
+}
+input_1.onkeyup = function(){
+  changeLBS();
+}
+
+function changeKG(){
+  var val_2 = document.getElementById('2').value;
+  var val_1 = parseFloat(val_2) * 0.45359237;
+  document.getElementById('1').value = val_1.toFixed(2);
+}
+var input_2 = document.getElementById('2');
+input_2.onchange = function(){
+  changeLBS();
+}
+input_2.onkeyup = function(){
+  changeLBS();
+}
+
+</script>
+<body>
+<input type='text' style="width:50px" name='1' id='1' onkeyup="changeLBS()">
+<input type='text' style="width:50px" name='2' id='2' onkeyup="changeKG()">
+</body>
+</html>

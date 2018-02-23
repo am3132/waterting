@@ -1,8 +1,8 @@
 <?php
 
 if (!isset($_POST['FirstName']) OR !isset($_POST['LastName']) OR !isset($_POST['Email'])
-	OR !isset($_POST['MobileNo']) OR !isset($_POST['Username']) OR !isset($_POST['Password'])
-	OR !isset($_POST['CPassword']))
+	OR !isset($_POST['MobileNo']) OR !isset($_POST['Height']) OR !isset($_POST['Weight'])
+	OR !isset($_POST['Username']) OR !isset($_POST['Password'])	OR !isset($_POST['CPassword']))
 {
 	header('Location: /waterting/signup.html');
 }
@@ -18,6 +18,8 @@ else
 	$lastname = $_POST['LastName'];
 	$email = $_POST['Email'];
 	$mobileno = $_POST['MobileNo'];
+	$height = $_POST['Height'];
+	$weight = $_POST['Weight'];
 	$username = $_POST['Username'];
 	$password = $_POST['Password'];
 	$sql = "SELECT * FROM userstable WHERE Username = '$username' OR Email='$email'";
@@ -42,8 +44,8 @@ else
 			return $randomToken;
 		}
 			
-		$sql = "INSERT INTO UsersTable (FirstName, LastName, Email, MobileNo, Username, Password)
-		VALUES ('$firstname', '$lastname', '$email', '$mobileno', '$username', '$password')";
+		$sql = "INSERT INTO UsersTable (FirstName, LastName, Email, MobileNo, Height, Weight, Username, Password)
+		VALUES ('$firstname', '$lastname', '$email', '$mobileno', '$height', '$weight', '$username', '$password')";
 		mysqli_query($con,$sql); 
 		
 		$sql = "SELECT * FROM UsersTable WHERE Username = '$username' and Password = '$password'";

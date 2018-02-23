@@ -1,19 +1,3 @@
-<html>
-	<head>
-		<title> Water Ting </title>
-<style>
-h1 {font-family: Trebuchet MS;
-	font-size: 100;
-  color: #000000;
-  text-shadow:
-   -3px -3px 0 #21F,  
-    3px -3px 0 #21F,
-    -3px 3px 0 #21F,
-     3px 3px 0 #21F;
-}
-</style>
-	</head>
-</html>	
 <?php
 
 $authToken = null;
@@ -32,11 +16,37 @@ if (isset($_COOKIE['auth']))
 	$username = $record['Username'];
 	$password = $record['Password'];
 	echo "<h1>Alo, $username !&nbsp;&nbsp;<br> De ting goes skrrrrrrrrra</h1>";
-	echo "<form action='/waterting/Logout.php'> <input style=width:500px;height:250px;font-size:100px; type='submit' value='Log out'> </form>";
 }						
-
 else 
 {
 	header('Location: /waterting/home.html');
 }	
 ?>
+<html>
+	<head>
+		<title> Water Ting </title>
+	</head>
+<style>
+h1 {font-family: Trebuchet MS;
+	font-size: 100;
+  color: #000000;
+  text-shadow:
+   -3px -3px 0 #21F,  
+    3px -3px 0 #21F,
+    -3px 3px 0 #21F,
+     3px 3px 0 #21F;
+}
+
+.acclinks
+{
+text-decoration: none;
+color: black;
+font-family: Trebuchet MS;
+}
+</style>
+<body>
+	<a href="/waterting/editaccountdetails.php" class = "acclinks">Edit Account Details</a>&nbsp;&nbsp;<br>
+	<a href="/waterting/statistics.php" class = "acclinks">Statistics</a>&nbsp;&nbsp;<br>
+	<a href="/waterting/logout.php" class = "acclinks">Log out</a>&nbsp;&nbsp;<br>
+</body>
+</html>
