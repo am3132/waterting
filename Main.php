@@ -31,7 +31,7 @@ if (isset($_COOKIE['auth']))
 	$record = mysqli_fetch_assoc($result);
 	$username = $record['Username'];
 	$password = $record['Password'];
-	echo "<h1>Welcome, $username !&nbsp;&nbsp;<br> De ting goes skrrrrrrrrra</h1>";
+	echo "<h1>Alo, $username !&nbsp;&nbsp;<br> De ting goes skrrrrrrrrra</h1>";
 	echo "<form action='/waterting/Logout.php'> <input style=width:500px;height:250px;font-size:100px; type='submit' value='Log out'> </form>";
 }						
 
