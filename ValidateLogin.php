@@ -1,5 +1,5 @@
 <?php
-echo '<center>';
+
 $authToken = null;
 $con = mysqli_connect("localhost","csed","waterting","waterting");
 if (!$con)
@@ -8,6 +8,14 @@ if (!$con)
 	die();
 }
 
+if (empty($_POST['Username']) OR empty($_POST['Password']))
+{
+	header('Location: /waterting/home.html');
+}
+else
+{
+echo '<h1>Test1 Credentials Taken</h1>';
+echo '<center>';
 $checkUN = $_POST['Username'];
 $checkPW = $_POST['Password'];
 $query = "SELECT * FROM UsersTable WHERE Username = '$checkUN'";
@@ -30,12 +38,13 @@ function getRandAuthToken()
 
 if ($username == $checkUN && $password == $checkPW)
     { 
+		echo '<h1>Test2 Login Successful</h1>';
 		$authToken = getRandAuthToken();
 		$query = "UPDATE userstable SET AuthToken='$authToken' WHERE Username = '$checkUN' AND Password ='$checkPW'";
 		$result = mysqli_query($con,$query);
 		#Authorization Token for 1 hour
 		setcookie("auth",$authToken,time()+3600,'/');
-		header('Location: /waterting/main.php');
+		echo "<script type='text/javascript'> window.setTimeout(function(){window.location.href = '/waterting/main.php';}, 1500); </script> ";
 	}
 
 else
@@ -44,4 +53,5 @@ else
 	echo "<img style='position: fixed; bottom: 0px; right: 0px;' src='clank.png'>";
 }
 echo '</center>';
+}
 ?>

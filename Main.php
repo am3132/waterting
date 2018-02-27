@@ -47,6 +47,8 @@ font-family: Trebuchet MS;
 <body>
 	<a href="/waterting/editaccountdetails.php" class = "acclinks">Edit Account Details</a>&nbsp;&nbsp;<br>
 	<a href="/waterting/statistics.php" class = "acclinks">Statistics</a>&nbsp;&nbsp;<br>
+	<a href="/waterting/addconsumption.php" class = "acclinks">Add Consumption</a>&nbsp;&nbsp;<br>
+	<a href="/waterting/trackconsumption.php" class = "acclinks">Track Consumption</a>&nbsp;&nbsp;<br>
 	<a href="/waterting/logout.php" class = "acclinks">Log out</a>&nbsp;&nbsp;<br>
 </body>
 </html>

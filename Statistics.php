@@ -34,12 +34,15 @@ if (isset($_COOKIE['auth']))
 		header('Location: /waterting/home.html');
 	}
 	else
-	{	echo "<div class='acclinks'>
+	{	
+	echo "<div class='acclinks'>
 				Welcome, $username !&nbsp;&nbsp;<br>
 				</div>";
-		echo '<a href="/waterting/editaccountdetails.php" class = "acclinks">Edit Account Details</a>&nbsp;&nbsp;<br>';
-		echo '<a href="/waterting/statistics.php" class = "acclinks">Statistics</a>&nbsp;&nbsp;<br>';
-		echo '<a href="/waterting/logout.php" class = "acclinks">Log out</a>&nbsp;&nbsp;<br>';
+	echo '<a href="/waterting/editaccountdetails.php" class = "acclinks">Edit Account Details</a>&nbsp;&nbsp;<br>';
+	echo '<a href="/waterting/statistics.php" class = "acclinks">Statistics</a>&nbsp;&nbsp;<br>';
+	echo '<a href="/waterting/addconsumption.php" class = "acclinks">Add Consumption</a>&nbsp;&nbsp;<br>';
+	echo '<a href="/waterting/trackconsumption.php" class = "acclinks">Track Consumption</a>&nbsp;&nbsp;<br>';
+	echo '<a href="/waterting/logout.php" class = "acclinks">Log out</a>&nbsp;&nbsp;<br>';
 				
 	}						
 } 
@@ -66,6 +69,15 @@ transform: translate(-50%, -50%);
 
 table {border-style: solid;
     border-color: #C1C1C1;}
+
+.logo 
+{
+position: fixed;
+top: 10%;
+left: 5%;
+display: inline-block;
+transform: translate(-50%, -50%);
+}
 	
 .acclinks
 {

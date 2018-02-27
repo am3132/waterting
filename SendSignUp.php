@@ -20,6 +20,7 @@ else
 	$mobileno = $_POST['MobileNo'];
 	$height = $_POST['Height'];
 	$weight = $_POST['Weight'];
+	$totalneeded = ($weight / 30) * 1000;
 	$username = $_POST['Username'];
 	$password = $_POST['Password'];
 	$sql = "SELECT * FROM userstable WHERE Username = '$username' OR Email='$email'";
@@ -44,8 +45,8 @@ else
 			return $randomToken;
 		}
 			
-		$sql = "INSERT INTO UsersTable (FirstName, LastName, Email, MobileNo, Height, Weight, Username, Password)
-		VALUES ('$firstname', '$lastname', '$email', '$mobileno', '$height', '$weight', '$username', '$password')";
+		$sql = "INSERT INTO UsersTable (FirstName, LastName, Email, MobileNo, Height, Weight, TotalNeeded, Username, Password)
+		VALUES ('$firstname', '$lastname', '$email', '$mobileno', '$height', '$weight', '$totalneeded','$username', '$password')";
 		mysqli_query($con,$sql); 
 		
 		$sql = "SELECT * FROM UsersTable WHERE Username = '$username' and Password = '$password'";

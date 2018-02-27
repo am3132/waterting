@@ -14,6 +14,7 @@ $sql = "CREATE TABLE UsersTable (
 			MobileNo varchar(15),
 			Height varchar(3),
 			Weight varchar(3),
+			TotalNeeded int(8),
 			Username varchar(20),
 			Password varchar(20),
 			AuthToken varchar(8),

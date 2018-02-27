@@ -1,3 +1,51 @@
+<?php
+echo '<div align="right">';
+
+$authToken = null;
+$con = mysqli_connect("localhost","csed","waterting","waterting");
+if (!$con)
+{
+	echo "Failed to connect to database :" . mysqli_connect_error();
+	die();
+}
+		
+if (isset($_COOKIE['auth'])) 
+{
+	$authToken = $_COOKIE['auth'];
+	$query = "SELECT * FROM userstable WHERE AuthToken = '$authToken'";
+	$result = mysqli_query($con,$query);	
+	$row = mysqli_fetch_assoc($result);
+	$username = $row['Username'];
+	$password = $row['Password'];
+	$firstname = $row['FirstName'];
+	$lastname = $row['LastName'];
+	$email = $row['Email'];
+	$mobileno = $row['MobileNo'];
+	$height = $row['Height'];
+	$weight = $row['Weight'];
+	if ($username === "Admin" && $password === "Admin123")
+	{
+		header('Location: /compproject/home/home.php');
+	}
+	else
+	{		echo "<div class='acclinks'>
+			Welcome, $username !&nbsp;&nbsp;<br>
+			</div>";
+	echo '<a href="/waterting/editaccountdetails.php" class = "acclinks">Edit Account Details</a>&nbsp;&nbsp;<br>';
+	echo '<a href="/waterting/statistics.php" class = "acclinks">Statistics</a>&nbsp;&nbsp;<br>';
+	echo '<a href="/waterting/addconsumption.php" class = "acclinks">Add Consumption</a>&nbsp;&nbsp;<br>';
+	echo '<a href="/waterting/trackconsumption.php" class = "acclinks">Track Consumption</a>&nbsp;&nbsp;<br>';
+	echo '<a href="/waterting/logout.php" class = "acclinks">Log out</a>&nbsp;&nbsp;<br>';
+				
+	}						
+} 
+else 
+{	
+	header('Location: /waterting/home.html');
+}	
+echo '</div>';
+?>
+
 <html>
 <head>
 	<title> WT Edit Account </title>
@@ -186,8 +234,7 @@ text-decoration: none;
 color: black;
 font-family: Trebuchet MS;
 position: relative;
-	top: 500px;
-    right: 30px;
+	top: 300px;
 }
 
 td {font-family: Trebuchet MS;
@@ -201,63 +248,20 @@ table {position: absolute;
 	
 .logo 
 {
-position: absolute;
+position: fixed;
 top: 10%;
-left: 5.7%;
+left: 5%;
 display: inline-block;
 transform: translate(-50%, -50%);
 }
 </style>
-<?php
-echo '<div align="right">';
 
-$authToken = null;
-$con = mysqli_connect("localhost","csed","waterting","waterting");
-if (!$con)
-{
-	echo "Failed to connect to database :" . mysqli_connect_error();
-	die();
-}
-		
-if (isset($_COOKIE['auth'])) 
-{
-	$authToken = $_COOKIE['auth'];
-	$query = "SELECT * FROM userstable WHERE AuthToken = '$authToken'";
-	$result = mysqli_query($con,$query);	
-	$row = mysqli_fetch_assoc($result);
-	$username = $row['Username'];
-	$password = $row['Password'];
-	$firstname = $row['FirstName'];
-	$lastname = $row['LastName'];
-	$email = $row['Email'];
-	$mobileno = $row['MobileNo'];
-	$height = $row['Height'];
-	$weight = $row['Weight'];
-	if ($username === "Admin" && $password === "Admin123")
-	{
-		header('Location: /compproject/home/home.php');
-	}
-	else
-	{	echo "<div class='acclinks'>
-				Welcome, $username !&nbsp;&nbsp;<br>
-				</div>";
-		echo '<a href="/waterting/editaccountdetails.php" class = "acclinks">Edit Account Details</a>&nbsp;&nbsp;<br>';
-		echo '<a href="/waterting/logout.php" class = "acclinks">Log out</a>&nbsp;&nbsp;<br>';
-				
-	}						
-} 
-else 
-{	
-	header('Location: /compproject/home/home.php');
-}	
-echo '</div>';
-?>
 <body>
 <a href='/waterting/main.php' class='logo'><img src='/waterting/droplet.jpg' width='150' height='120'></a>	
 <form action="updateaccountdetails.php" method="POST" onsubmit="return validateEditAccount();" enctype="multipart/form-data">
 	<table>
-		<input type='hidden' name='OldEmail' <?php echo "value='$email'";?>>
-		<!--<input type='hidden' name='OldUsername' <?php echo "value='$username'";?>>-->
+		<input type='hidden' name='OldEmail' value="<?php echo $email ?>">
+		<!--<input type='hidden' name='OldUsername' value="<?php echo $email ?>">-->
 		<tr>
 			<td>Firstname:</td>
 				<td height='80' width='200'><input id="FirstName" name="FirstName" type="text" value="<?php echo $firstname ?>"/><br>
