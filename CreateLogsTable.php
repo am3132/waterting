@@ -1,14 +1,18 @@
 <?php
+//Create connection to the server
 $con = mysqli_connect('localhost', 'csed', 'waterting' , 'waterting');
+//Check connection
 if (!$con)
 {
 	echo "Failed to connect to database :" . mysqli_connect_error();
 	die();
 }
-mysqli_query ($con,"USE csed");
+//Execute SQL query, using the assigned database
+mysqli_query ($con,"USE waterting");
+//Create SQL query that CREATES the table
 $sql = "CREATE TABLE LogsTable (
 			DayID int NOT NULL AUTO_INCREMENT,
-			CustomerID int,
+			UserID int,
 			Date datetime,
 			CurrentCons int(11),
 			TotalNeeded int (11),
@@ -16,5 +20,6 @@ $sql = "CREATE TABLE LogsTable (
 			PRIMARY KEY (DayID),
 			FOREIGN KEY (CustomerID) REFERENCES UsersTable(CustomerID)
 		)";
+//Execute SQL query
 mysqli_query($con,$sql);
 ?>

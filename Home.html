@@ -4,11 +4,15 @@
 	</head>
 	<body>
 		<h1>Hi.</h1>
+		<!--Code enclosed in form tag is how data is allowed to be input. i.e. textbox, button-->
 		<form action="/waterting/validatelogin.php" method = "post" enctype="multipart/form-data">
-			Username : <input type = "text" name = 'Username'> <!--&nbsp;-->
+		<!--Textbox are identified by a name, so they can be passed using the POST method
+		to the next php file when the login button is clicked.-->
+			Username : <input type = "text" name = 'Username'>
 			Password : <input type = "password" name = 'Password'> 
 			<br> <br> <input style='width:63px' type="submit" value="Login"> </br> </br>
 		</form>
+		<!--Code enclosed in form tag is just the button that redirects to the sign up form.-->
 		<form action="/waterting/SignUp.html">
 			<input type="submit" value="Sign Up">
 		</form>

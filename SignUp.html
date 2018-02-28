@@ -1,8 +1,8 @@
 <html>
 <head>
 	<title> WT Sign Up </title>
-	
-<script>
+</head>
+<script> <!--Validation so that the account details are of the correct format.-->
 function validateSignUp() {
   var valid = 1;
   var firstname = document.getElementById('FirstName');
@@ -197,11 +197,14 @@ transform: translate(-50%, -50%);
 }
 
 </style>
-</head>
 <body>
+<!--Image is a hyperlink. Redirects when it is clicked.-->
 <a href='/waterting/home.html' class='logo'><img src='/waterting/droplet.jpg' width='150' height='120'></a>	
+<!--Code enclosed in form tag holds is how data is allowed to be input. i.e. textbox, button-->
 <form action="sendsignup.php" method="POST" onsubmit="return validateSignUp();" enctype="multipart/form-data">
 	<table> 
+	<!--Textboxes are identified by a name, so they can be passed using the POST method
+		to the next php file when the submit button is clicked.-->
 		<tr>
 			<td>Firstname:</td>
 			<td height='80' width='200'><input id="FirstName" name="FirstName" type="text" value=""/><br>
@@ -250,5 +253,4 @@ transform: translate(-50%, -50%);
 	</table>
 </form>
 </body>
-</head>
 </html>

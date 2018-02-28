@@ -1,19 +1,24 @@
 <?php
-// Create connection
+//Create connection to the server
 $con = mysqli_connect('localhost', 'csed', 'waterting');
-// Check connection
+//Check connection
 if (!$con)
 {
-    die("Connection failed: " . mysqli_connect_error());
+    echo "Error connecting to the database" . mysqli_connect_error(); 
+	die();
 }
-// Create database
+
+//Create SQL query that CREATES the database. This is executed only ONCE.
 $sql = "CREATE DATABASE waterting";
-if (mysqli_query($con, $sql)) {
+//If execution of the query is successfull, then display message.
+if (mysqli_query($con, $sql))
+{
     echo "Database created successfully";
 } 
-else
+else //Else display error
 {
     echo "Error creating database: " . mysqli_error($con);
 }
+//Close connection
 mysqli_close($con);
 ?>

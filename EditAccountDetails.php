@@ -2,19 +2,26 @@
 echo '<div align="right">';
 
 $authToken = null;
+//Create connection to the server
 $con = mysqli_connect("localhost","csed","waterting","waterting");
+//Check connection
 if (!$con)
 {
 	echo "Failed to connect to database :" . mysqli_connect_error();
 	die();
 }
-		
+//Check if there is a cookie. if isset() means 'IF there IS'
 if (isset($_COOKIE['auth'])) 
 {
+	//Store cookie in a variable
 	$authToken = $_COOKIE['auth'];
+	//Create SQL query to identify user from userstable
 	$query = "SELECT * FROM userstable WHERE AuthToken = '$authToken'";
-	$result = mysqli_query($con,$query);	
-	$row = mysqli_fetch_assoc($result);
+	//Execute query
+	$result=mysqli_query($con,$query);
+	//Store the fields associated with the record in the userstable in a variable	
+	$row=mysqli_fetch_assoc($result);
+	//The following are variables that store the fields of data that we got from the record in the userstable
 	$username = $row['Username'];
 	$password = $row['Password'];
 	$firstname = $row['FirstName'];
@@ -23,23 +30,17 @@ if (isset($_COOKIE['auth']))
 	$mobileno = $row['MobileNo'];
 	$height = $row['Height'];
 	$weight = $row['Weight'];
-	if ($username === "Admin" && $password === "Admin123")
-	{
-		header('Location: /compproject/home/home.php');
-	}
-	else
-	{		echo "<div class='acclinks'>
+
+	echo "<div class='acclinks'>
 			Welcome, $username !&nbsp;&nbsp;<br>
 			</div>";
 	echo '<a href="/waterting/editaccountdetails.php" class = "acclinks">Edit Account Details</a>&nbsp;&nbsp;<br>';
 	echo '<a href="/waterting/statistics.php" class = "acclinks">Statistics</a>&nbsp;&nbsp;<br>';
 	echo '<a href="/waterting/addconsumption.php" class = "acclinks">Add Consumption</a>&nbsp;&nbsp;<br>';
 	echo '<a href="/waterting/trackconsumption.php" class = "acclinks">Track Consumption</a>&nbsp;&nbsp;<br>';
-	echo '<a href="/waterting/logout.php" class = "acclinks">Log out</a>&nbsp;&nbsp;<br>';
-				
-	}						
+	echo '<a href="/waterting/logout.php" class = "acclinks">Log out</a>&nbsp;&nbsp;<br>';						
 } 
-else 
+else //If there is no cookie,the head to the home page
 {	
 	header('Location: /waterting/home.html');
 }	
@@ -50,7 +51,7 @@ echo '</div>';
 <head>
 	<title> WT Edit Account </title>
 </head>
-<script>
+<script> <!--Validation so that the account details are of the correct format.-->
 function validateEditAccount() {
   var valid = 1;
   var firstname = document.getElementById('FirstName');
@@ -257,12 +258,16 @@ transform: translate(-50%, -50%);
 </style>
 
 <body>
-<a href='/waterting/main.php' class='logo'><img src='/waterting/droplet.jpg' width='150' height='120'></a>	
+<!--Image is a hyperlink. Redirects when it is clicked.-->
+<a href='/waterting/main.php' class='logo'><img src='/waterting/droplet.jpg' width='150' height='120'></a>
+<!--Code enclosed in form tag holds is how data is allowed to be input. i.e. textbox, button-->
 <form action="updateaccountdetails.php" method="POST" onsubmit="return validateEditAccount();" enctype="multipart/form-data">
 	<table>
 		<input type='hidden' name='OldEmail' value="<?php echo $email ?>">
-		<!--<input type='hidden' name='OldUsername' value="<?php echo $email ?>">-->
+		<!--I'll explain what these 2 tags are later on.<input type='hidden' name='OldUsername' value='<?php echo $email ?>'>-->
 		<tr>
+		<!--Textboxes are identified by a name, so they can be passed using the POST method
+		to the next php file when the submit button is clicked.-->
 			<td>Firstname:</td>
 				<td height='80' width='200'><input id="FirstName" name="FirstName" type="text" value="<?php echo $firstname ?>"/><br>
 				<span id="firstname_validation" class="error" style="font-size:15px" style="font-size:15px"></span>

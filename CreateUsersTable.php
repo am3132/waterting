@@ -1,13 +1,17 @@
 <?php
+//Create connection to the server
 $con = mysqli_connect('localhost', 'csed', 'waterting', 'waterting');
+//Check connection
 if (!$con)
 {
 	echo "Failed to connect to database :" . mysqli_connect_error();
 	die();
 }
+//Execute SQL query, using the assigned database
 mysqli_query ($con,"USE WaterTing");
+//Create SQL query that CREATES the table
 $sql = "CREATE TABLE UsersTable (
-			CustomerID int NOT NULL AUTO_INCREMENT,
+			UserID int NOT NULL AUTO_INCREMENT,
 			FirstName varchar(30),
 			LastName varchar(30),
 			Email varchar(40),
@@ -21,5 +25,6 @@ $sql = "CREATE TABLE UsersTable (
 			PRIMARY KEY (CustomerID),
 			UNIQUE INDEX (CustomerID)
 			)";
+//Execute SQL query
 mysqli_query($con,$sql);
 ?>

@@ -1,21 +1,27 @@
 <?php
 echo '<div align="right">';
+$authToken = null;	
+//Create connection to the server
 $con = mysqli_connect('localhost', 'csed', 'waterting', 'waterting');
-//if there is an error connecting to the database it must be displayed.
+//Check connection
 if (!$con) 
 {
 	echo "Error connecting to the database" . mysqli_connect_error(); 
 	die();
 }
-$authToken = null;		
+//Check if there is a cookie. if isset() means 'IF there IS'
 if (isset($_COOKIE['auth'])) 
 {
+	//Store cookie in a variable
 	$authToken = $_COOKIE['auth'];
+	//Create SQL query to identify user from userstable by that cookie
 	$query = "SELECT * FROM userstable WHERE AuthToken = '$authToken'";
-	$result = mysqli_query($con,$query);	
+	//Execute SQL query
+	$result = mysqli_query($con,$query);
+	//Store the fields associated with the record in the userstable in a variable
 	$record = mysqli_fetch_assoc($result);
 	$username = $record['Username'];
-	$customerid = $record['CustomerID'];
+	$userid = $record['UserID'];
 	echo "<div class='acclinks'>
 			Welcome, $username !&nbsp;&nbsp;<br>
 			</div>";
@@ -34,10 +40,10 @@ if (isset($_COOKIE['auth']))
 			// $dateto = $_GET["dateto"];
 		// }
 }
-	else
-	{	
-		header('Location: /waterting/home.html');
-	}		
+else //If there is no cookie,then head to the home page
+{	
+	header('Location: /waterting/home.html');
+}		
 echo '</div>';
 ?>
 <html>
@@ -112,13 +118,16 @@ border-left:2px solid #000;
 </style>	
 </head>
 <body>
+<!--Image is a hyperlink. Redirects when it is clicked.-->
 <a href='/waterting/main.php' class='logo'><img src='/waterting/droplet.jpg' width='150' height='120'></a>
 <?php
-$sql = "SELECT * FROM logstable WHERE ( CustomerID = '$customerid' ) ORDER BY DayID DESC";
+//Create SQL query to fetch all the days from the logstable where the user has registered their consumptions.
+$sql = "SELECT * FROM logstable WHERE ( UserID = '$userid' ) ORDER BY DayID DESC";
+//Execute SQL query
 $result = mysqli_query($con,$sql);
 ?>
 <table class='middle'>
-	<tr>
+	<tr><!--<th> tag used to display the headings-->
 		<th class="border_vsidesth" align="center">Day ID</th>
 		<th class="border_vsidesth" align="center">Customer ID</th>
 		<th class="border_vsidesth" align="center">Date</th>
@@ -129,10 +138,12 @@ $result = mysqli_query($con,$sql);
 	</tr>
 	<?php
 	$cnt = 0;
+	//WHILE there exist records in the logstable of the specific user, then display them.
 	while ($record=mysqli_fetch_array($result))
 	{
+		//Store the fields associated with the record in the logs in a variable
 		$dayid = $record["DayID"];
-		$customerid = $record["CustomerID"];
+		$userid = $record["UserID"];
 		$date = $record["Date"];
 		$currentcons = $record["CurrentCons"];
 		$totalneeded = $record["TotalNeeded"];
